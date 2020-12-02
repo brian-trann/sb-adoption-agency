@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Adoption Agency{% endblock %}
+
+{% block content %}
+
+
+<div class="container align-items-center justify-content-center">
+    <h1 class="mt-5">{{pet.name}}</h1>
+    <p class="h5">Species: {{pet.species}}</p>
+    {% if pet.age %}
+    <p class="h5">Age: {{pet.age}}</p>
+    {% endif %}
+
+    {% if pet.notes %}
+    <p class="h5">Notes:</p>
+    <p>{{pet.notes}}</p>
+    
+    {% endif %}
+    
+    <img class="d-block mx-auto mb-4" src="{{pet.get_photo_url()}}" alt="">
+<h5>Edit form:</h5>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {% for field in form if field.widget.input_type != 'hidden'%}
+    <div class="form-group">
+        {{field.label}}
+        {{field(class_="form-control")}}
+  
+        {% for err in field.errors %}
+        <small class="form-text text-danger">
+          {{err}}
+        </small>
+        {% endfor %}
+    </div>
+
+    {% endfor %}
+    
+    <a href="/" class="btn btn-outline-info" >Go Back</a>
+    <button class="btn btn-info">Save</button>
+  </form>
+
+</div>
+{% endblock %}
